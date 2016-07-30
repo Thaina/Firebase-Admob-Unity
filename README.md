@@ -1,28 +1,10 @@
-Admob Unity Plugin
+Google Firebase Unity Admob Plugin
 ==============================
 
-Admob Unity Plugin provides a way to integrate admob ads in Unity3D Game and u3d app.
-You can use it for Unity iOS and Android App with the same c# or js code.
+Google Firebase Unity Admob Plugin provides a way to integrate firebase admob ads in Unity3D Game and u3d app.
+You can use it for Unity iOS and Android App with the same c# or js code.It support all native firebase admob features such as Native Express Ad
 
-## Admob Unity3d Plugin Readme Contents
-
-1. [Admob Unity Plugin Description](#admob-unity-plugin-description)
-2. [Unity Admob Plugin Features](#unity-admob-plugin-features)
-3. [Downloads Admob Unity Plugin](#downloads-admob-unity-plugin)
-4. [Installation Admob Unity](#installation-admob-unity)
-5. [Unity Plugin Wiki and Documentation](#unity-plugin-wiki-and-documentation)
-6. [Quick Start](#quick-start)
-7. [Unity Admob Demo Usage](#unity-admob-demo-usage)
-8. [Important Tips](#important-tips)
-9. [Screenshots](#screenshots)
-10. [License](#license)
-
-## Admob Unity Plugin Description
-The Google Mobile Ads SDK is the latest generation in Google mobile advertising featuring refined ad formats and streamlined APIs for access to mobile ad networks and advertising solutions. The SDK enables Unity mobile app developers to maximize their monetization in native mobile apps.
-
-This repository contains the source code for the Google Mobile Ads Unity plugin. This plugin enables Unity developers to easily serve Google Mobile Ads on Android and iOS apps without having to write Java or Objective-C code. The plugin provides a C# interface for requesting ads that is used by C# scripts in your Unity project.
-
-## Unity Admob Plugin Features
+## Google Firebase Unity Admob Plugin Features
 Platforms supported in one plugin :
 - [x] Android, Based Admob SDK v9.0 (part of Google Firebase service)
 - [x] iOS, via SDK v7.8.0
@@ -39,15 +21,16 @@ Ad Types:
 - [x] Native Express Ad 
 
 
-## Downloads Admob Unity Plugin
-AdmobPluginRes/GoogleMobileAds.framework and admob_unity_plugin.unitypackage is reqired <br/>
-Download those files from Admob Unity3d Plugin Project Home https://github.com/unity-plugins/Firebase-Admob-Unity <br/>
-or Download all the Unity admob plugin project https://github.com/unity-plugins/Firebase-Admob-Unity/archive/master.zip<br/>
+## Downloads Firebase Admob Unity Plugin
+Assets/Plugins  is reqired     
+admob_unity_plugin.unitypackage contain all required files and demo files     
+Download those files from Admob Unity3d Plugin Project Home https://github.com/unity-plugins/Firebase-Admob-Unity     
+or Download all the Unity admob plugin project https://github.com/unity-plugins/Firebase-Admob-Unity/archive/master.zip    
 
-## Installation Admob Unity
+## Installation Firebase Admob Unity
 1. Open your project in the Unity editor.
 2. Navigate to **Assets -> Import Package -> Custom Package**.
-3. Select the AdmobUnityPlugin.unitypackage file.
+3. Select the admob_unity_plugin.unitypackage file.
 4. Import all of the files for the plugins by selecting **Import**. Make sure
    to check for any conflicts with files.
 
@@ -56,7 +39,7 @@ or Download all the Unity admob plugin project https://github.com/unity-plugins/
 * [Tutorial](https://github.com/unity-plugins/Firebase-Admob-Unity/wiki)
 
 ## Quick Start
-#### 1.Init Admob Unity Plugin 
+#### 1.Init Firebase Admob Unity Plugin 
 Create A C# script ,drag the script to a object on scene , add the follow code in the script file
 ```
     using admob;
@@ -151,20 +134,13 @@ By default, banners are visible. To temporarily hide a banner, call:
     Admob.Instance().removeBanner("defaultNativeBanner");
 ```
 
-
-## Unity Admob Demo Usage
-1. import AdmobUnityPlugin.unitypackage to your Unity project
-2. copy admobdemo.cs from AdmobPluginRes to your unity project/assets dic
-3. attach admobdemo.cs to the main camera
-4. edit  admob id  in admobdemo.cs
-5. build and run this in your device
-
 ## Important Tips
-1. Add **GoogleMobileAds.framework**. to Xcode Project
+1. remove **GoogleMobileAds.framework** and then  Add **GoogleMobileAds.framework**. to Xcode Project manually
 2. Add the following framework to Xcode project
 ```
     AdSupport.framework,EventKit.framework,EventKitUI.framework,CoreTelephony.framework,StoreKit.framework,MessageUI.framework
 ```
+3. attach admobdemo.cs to the main camera or object object on stage all the time.    
 ## Screenshots
 ![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_banner.jpg?raw=true) 
 ![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_full.jpg?raw=true) 
