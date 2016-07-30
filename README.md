@@ -141,9 +141,9 @@ By default, banners are visible. To temporarily hide a banner, call:
     AdSupport.framework,EventKit.framework,EventKitUI.framework,CoreTelephony.framework,StoreKit.framework,MessageUI.framework
 ```
 3. attach admobdemo.cs to the main camera or object object on stage all the time.    
+
 ## Screenshots
-![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_banner.jpg?raw=true) 
-![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_full.jpg?raw=true) 
+![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_banner_full.jpg?raw=true) 
 
 ## License
 [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html)
