@@ -60,7 +60,7 @@ public class admobdemo : MonoBehaviour {
         }
         if (GUI.Button(new Rect(120, 100, 100, 60), "showbannerABS"))
         {
-            Admob.Instance().showBannerAbsolute(AdSize.Banner, 0, 30);
+            Admob.Instance().showBannerAbsolute(AdSize.Banner, 0, 300);
         }
         if (GUI.Button(new Rect(240, 100, 100, 60), "removebanner"))
         {
@@ -75,7 +75,7 @@ public class admobdemo : MonoBehaviour {
         }
         if (GUI.Button(new Rect(120, 200, 100, 60), "showNativeABS"))
         {
-            Admob.Instance().showNativeBannerAbsolute(new AdSize(320,120), 0, 30, nativeBannerID);
+            Admob.Instance().showNativeBannerAbsolute(new AdSize(320,120), 0, 300, nativeBannerID);
         }
         if (GUI.Button(new Rect(240, 200, 100, 60), "removeNative"))
         {

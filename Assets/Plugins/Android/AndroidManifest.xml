@@ -33,14 +33,7 @@ required for displaying ads.
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    <!-- Denote the referenced Google Play services version -->
-    <meta-data android:name="com.google.android.gms.version"
-        android:value="9080000" />
-    <!-- Google Mobile Ads Activity -->
-    <activity
-             android:name="com.google.android.gms.ads.AdActivity"
-             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-             android:theme="@android:style/Theme.Translucent" />
+   
   </application>
   
 </manifest>
