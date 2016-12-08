@@ -86,6 +86,8 @@ If you want to test the ads or the your app with children target,you can set wit
 ```
     Admob.Instance().setTesting(true);
     Admob.Instance().setForChildren(true);
+     string[] keywords = { "game","crash","male game"};
+     Admob.Instance().setKeywords(keywords);
 ```
 #### 7.Ad Events
 Both _Banner_ and _Interstitial_ contain the same ad events that you can
