@@ -55,8 +55,8 @@ public class admobdemo : MonoBehaviour {
             else
             {
             	
-            		//ad.loadRewardedVideo("ca-app-pub-3120877784109998/4714341465");
-                ad.loadRewardedVideo("ca-app-pub-4622924889224894/8984406965");
+       
+                ad.loadRewardedVideo("ca-app-pub-3940256099942544/xxxxxxxxx");
             }
         }
         if (GUI.Button(new Rect(0, 100, 100, 60), "showbanner"))
@@ -71,8 +71,8 @@ public class admobdemo : MonoBehaviour {
         {
             Admob.Instance().removeBanner();
         }
-        string nativeBannerID = "ca-app-pub-6908989844804937/5541215009";//
-       // string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
+
+        string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {
             
