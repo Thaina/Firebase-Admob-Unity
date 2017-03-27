@@ -11,8 +11,11 @@ public class admobdemo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+	    if (Input.GetKeyUp (KeyCode.Escape)) {
+            Debug.Log(KeyCode.Escape+"-----------------");
+		   // ad.removeAllBanner();
+	    }
+    }
     Admob ad;
     //bool isAdmobInited = false;
     void initAdmob()
@@ -55,8 +58,7 @@ public class admobdemo : MonoBehaviour {
             else
             {
             	
-       
-                ad.loadRewardedVideo("ca-app-pub-3940256099942544/xxxxxxxxx");
+                ad.loadRewardedVideo("ca-app-pub-3940256099942544/xxxxxxxxxx");
             }
         }
         if (GUI.Button(new Rect(0, 100, 100, 60), "showbanner"))
@@ -71,7 +73,7 @@ public class admobdemo : MonoBehaviour {
         {
             Admob.Instance().removeBanner();
         }
-
+        
         string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {

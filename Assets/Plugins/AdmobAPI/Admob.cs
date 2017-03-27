@@ -23,6 +23,9 @@ namespace admob
 	    }
         
 		#if UNITY_EDITOR
+	   	public void removeAllBanner(){
+		Debug.Log("calling removeAllBanner");
+	}
 		private void preInitAdmob()
 		{
 
@@ -116,6 +119,9 @@ namespace admob
 
 #elif UNITY_IOS
         internal delegate void AdmobAdCallBack(string adtype, string eventName, string msg);
+	public void removeAllBanner(){
+		Debug.Log("calling removeAllBanner");
+	}
         private void preInitAdmob()
         {
 
@@ -278,6 +284,9 @@ namespace admob
                 jadmob.Call("setContext", new object[] { activy, new AdmobListenerProxy(innerlistener) });
 			}
 		}
+	public void removeAllBanner(){
+	jadmob.Call("removeAllBanner");
+	}
 		public void initAdmob(string bannerID,string fullID){
 			jadmob.Call ("initAdmob", new object[]{bannerID,fullID});
 		}
@@ -380,6 +389,9 @@ namespace admob
         }
 
 #else
+public void removeAllBanner(){
+		Debug.Log("calling removeAllBanner");
+	}
         private void preInitAdmob()
         {
            

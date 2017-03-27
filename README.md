@@ -6,8 +6,8 @@ You can use it for Unity iOS and Android App with the same c# or js code.It supp
 
 ## Google Firebase Unity Admob Plugin Features
 Platforms supported in one plugin :
-- [x] Android, Based Admob SDK v9.0 (part of Google Firebase service)
-- [x] iOS, via SDK v7.8.0
+- [x] Android, Based Admob SDK v10.2 (part of Google Firebase service)
+- [x] iOS, via SDK v7.18.0
 - [x] Support all native events
 - [x] AdRequest targeting methods,such as children target,test mode
 - [x] Not need change Android package name
@@ -19,6 +19,7 @@ Ad Types:
 - [x] Interstitial (text, picture, video)
 - [x] Rewarded Video 
 - [x] Native Express Ad 
+- [x] Rewarded Video
 
 
 ## Downloads Firebase Admob Unity Plugin
