@@ -2,36 +2,30 @@
 using System.Collections;
 using admob;
 public class admobdemo : MonoBehaviour {
-
-	// Use this for initialization
 	void Start () {
         Debug.Log("start unity demo-------------");
          initAdmob();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	    if (Input.GetKeyUp (KeyCode.Escape)) {
             Debug.Log(KeyCode.Escape+"-----------------");
-		   // ad.removeAllBanner();
 	    }
     }
     Admob ad;
-    //bool isAdmobInited = false;
     void initAdmob()
     {
         
-          //  isAdmobInited = true;
              ad = Admob.Instance();
             ad.bannerEventHandler += onBannerEvent;
             ad.interstitialEventHandler += onInterstitialEvent;
             ad.rewardedVideoEventHandler += onRewardedVideoEvent;
             ad.nativeBannerEventHandler += onNativeBannerEvent;
-            ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");
-        //   ad.setTesting(true);
+            ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");//all id are admob test id,change those to your
+           //ad.setTesting(true);//show test ad
             ad.setGender(AdmobGender.MALE);
             string[] keywords = { "game","crash","male game"};
-            ad.setKeywords(keywords);
+          //  ad.setKeywords(keywords);//set keywords for ad
             Debug.Log("admob inited -------------");
         
     }
@@ -57,8 +51,7 @@ public class admobdemo : MonoBehaviour {
             }
             else
             {
-            	
-                ad.loadRewardedVideo("ca-app-pub-3940256099942544/xxxxxxxxxx");
+            		ad.loadRewardedVideo("ca-app-pub-3940256099942544/1712485313");
             }
         }
         if (GUI.Button(new Rect(0, 100, 100, 60), "showbanner"))
@@ -67,22 +60,20 @@ public class admobdemo : MonoBehaviour {
         }
         if (GUI.Button(new Rect(120, 100, 100, 60), "showbannerABS"))
         {
-            Admob.Instance().showBannerAbsolute(AdSize.Banner, 0, 300);
+            Admob.Instance().showBannerAbsolute(AdSize.Banner, 20, 300);
         }
         if (GUI.Button(new Rect(240, 100, 100, 60), "removebanner"))
         {
             Admob.Instance().removeBanner();
         }
-        
-        string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
+        string nativeBannerID = "ca-app-pub-3940256099942544/2934735716";
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {
-            
             Admob.Instance().showNativeBannerRelative(new AdSize(320,120), AdPosition.BOTTOM_CENTER, 0,nativeBannerID);
         }
         if (GUI.Button(new Rect(120, 200, 100, 60), "showNativeABS"))
         {
-            Admob.Instance().showNativeBannerAbsolute(new AdSize(320,120), 0, 300, nativeBannerID);
+            Admob.Instance().showNativeBannerAbsolute(new AdSize(320,120), 20, 300, nativeBannerID);
         }
         if (GUI.Button(new Rect(240, 200, 100, 60), "removeNative"))
         {
@@ -103,7 +94,7 @@ public class admobdemo : MonoBehaviour {
     }
     void onRewardedVideoEvent(string eventName, string msg)
     {
-        Debug.Log("handler onRewardedVideoEvent---" + eventName + "   " + msg);
+        Debug.Log("handler onRewardedVideoEvent---" + eventName + "  rewarded: " + msg);
     }
     void onNativeBannerEvent(string eventName, string msg)
     {
