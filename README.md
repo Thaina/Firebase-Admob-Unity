@@ -18,7 +18,7 @@ Ad Types:
 - [x] Banner(All Banner Type and Custom banner sizes)
 - [x] Interstitial (text, picture, video)
 - [x] Rewarded Video 
-- [x] Native Express Ad 
+- [x] Native Advance Ad 
 - [x] Rewarded Video
 
 
@@ -122,8 +122,9 @@ showing it:
     }
 ```
 
-#### 9.Show Admob Native Express Ad in IOS and Android App 
+#### 9.Show Admob Advance Native Ad in IOS and Android App 
 Here is the minimal code needed to show admob banner.
+This is implemented with Admob Native Advanced as AdMob announced stop the express format ads 
 ```
     Admob.Instance().showNativeBannerRelative(new AdSize(360,100), AdPosition.BOTTOM_CENTER, 0,"ca-app-pub-3940256099942544/2562852117","defaultNativeBanner");
 

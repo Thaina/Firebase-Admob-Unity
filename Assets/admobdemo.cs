@@ -66,14 +66,14 @@ public class admobdemo : MonoBehaviour {
         {
             Admob.Instance().removeBanner();
         }
-        string nativeBannerID = "ca-app-pub-3940256099942544/2934735716";
+        string nativeBannerID = "ca-app-pub-3940256099942544/3986624511";
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {
-            Admob.Instance().showNativeBannerRelative(new AdSize(320,120), AdPosition.BOTTOM_CENTER, 0,nativeBannerID);
+            Admob.Instance().showNativeBannerRelative(new AdSize(320,132), AdPosition.BOTTOM_CENTER, 0,nativeBannerID);
         }
         if (GUI.Button(new Rect(120, 200, 100, 60), "showNativeABS"))
         {
-            Admob.Instance().showNativeBannerAbsolute(new AdSize(320,120), 20, 300, nativeBannerID);
+            Admob.Instance().showNativeBannerAbsolute(new AdSize(-1,200), 20, 300, nativeBannerID);
         }
         if (GUI.Button(new Rect(240, 200, 100, 60), "removeNative"))
         {
