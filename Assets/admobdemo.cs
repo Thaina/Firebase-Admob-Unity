@@ -22,7 +22,9 @@ public class admobdemo : MonoBehaviour {
             ad.rewardedVideoEventHandler += onRewardedVideoEvent;
             ad.nativeBannerEventHandler += onNativeBannerEvent;
             ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");//all id are admob test id,change those to your
-           //ad.setTesting(true);//show test ad
+                                                                                                             //ad.setTesting(true);//show test ad
+            //ad.setNonPersonalized(true);//if want load NonPersonalized only,set true
+           // ad.setIsDesignedForFamilies(true);//if is Is Designed For Families set true
             ad.setGender(AdmobGender.MALE);
             string[] keywords = { "game","crash","male game"};
           //  ad.setKeywords(keywords);//set keywords for ad

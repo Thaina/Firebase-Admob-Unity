@@ -91,6 +91,14 @@ namespace admob
 		{
 		Debug.Log("calling setTesting");
 		}
+        public void setIsDesignedForFamilies(bool v)
+        {
+            Debug.Log("calling setIsDesignedForFamilies");
+        }
+        public void setNonPersonalized(bool v)
+        {
+            Debug.Log("calling setNonPersonalized");
+        }
         public void setGender(int v)
         {
             Debug.Log("calling setGender");
@@ -223,6 +231,18 @@ namespace admob
         {
             _kmsetTesting(v);
         }
+        [DllImport("__Internal")]
+         private static extern void _kmsetIsDesignedForFamilies(bool v);
+        public void setIsDesignedForFamilies(bool v)
+        {
+            _kmsetIsDesignedForFamilies(v);
+        }
+        [DllImport("__Internal")]
+         private static extern void _kmsetNonPersonalized(bool v);
+         public void setNonPersonalized(bool v)
+        {
+            _kmsetNonPersonalized(v);
+        }
          [DllImport("__Internal")]
         private static extern void _kmsetGender(int v);
         public void setGender(int v)
@@ -347,6 +367,14 @@ namespace admob
         public void setForChildren(bool value)
         {
             jadmob.Call("setForChildren",value);
+        }
+         public void setIsDesignedForFamilies(bool value)
+        {
+            jadmob.Call("setIsDesignedForFamilies",value);
+        }
+         public void setNonPersonalized(bool value)
+        {
+            jadmob.Call("setNonPersonalized",value);
         }
         public void showNativeBannerRelative(AdSize size, int position, int marginY,string nativeBannerID, string instanceName = "defaultNativeBanner")
         {

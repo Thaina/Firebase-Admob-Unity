@@ -82,11 +82,13 @@ In addition to constants on _AdSize_, you can also create a custom size:
     AdSize adSize = new AdSize(250, 250);
     Admob.Instance().showBannerAbsolute(adSize,0,30);
 ```
-#### 6.Admob test Ads and children app
-If you want to test the ads or the your app with children target,you can set with admob unity plugin easy
+#### 6.Admob settings
+If you want to test the ads ,non personalize ads,set tag for family or set tag for  children market,you can set with admob unity plugin easy
 ```
-    Admob.Instance().setTesting(true);
-    Admob.Instance().setForChildren(true);
+    Admob.Instance().setNonPersonalized(true);//for only show non Personalized ads
+    Admob.Instance().setIsDesignedForFamilies(true);// this app designed for families
+    Admob.Instance().setTesting(true);//running test ads
+    Admob.Instance().setForChildren(true);// tag for children market
      string[] keywords = { "game","crash","male game"};
      Admob.Instance().setKeywords(keywords);
 ```
