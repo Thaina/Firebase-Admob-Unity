@@ -31,6 +31,10 @@ namespace admob
 
 		}
 
+		public void initSDK(string appid)
+		{
+		Debug.Log("calling init sdk");
+		}
 		public void initAdmob(string bannerID, string fullID)
 		{
 		Debug.Log("calling initAdmob");
@@ -127,13 +131,19 @@ namespace admob
 
 #elif UNITY_IOS
         internal delegate void AdmobAdCallBack(string adtype, string eventName, string msg);
-	public void removeAllBanner(){
-		Debug.Log("calling removeAllBanner");
-	}
+		public void removeAllBanner(){
+			Debug.Log("calling removeAllBanner");
+		}
         private void preInitAdmob()
         {
 
         }
+        [DllImport("__Internal")]
+        private static extern void _kminitSDK(string appid);
+        public void initSDK(string appid)
+		{
+			_kminitSDK(appid);
+		}
         [DllImport("__Internal")]
         private static extern void _kminitAdmob(string bannerid, string fullid, AdmobAdCallBack callback);
         public void initAdmob(string bannerID, string fullID)
@@ -292,6 +302,7 @@ namespace admob
         
 #elif UNITY_ANDROID
 	private AndroidJavaObject jadmob;
+/*
          private void preInitAdmob(){
             if (jadmob == null) {
                 AndroidJavaClass admobUnityPluginClass = new AndroidJavaClass("com.admob.plugin.AdmobUnityPlugin");
@@ -304,9 +315,23 @@ namespace admob
                 jadmob.Call("setContext", new object[] { activy, new AdmobListenerProxy(innerlistener) });
 			}
 		}
-	public void removeAllBanner(){
-	jadmob.Call("removeAllBanner");
-	}
+		*/
+		 private void preInitAdmob(){
+            if (jadmob == null) {
+                AndroidJavaClass admobUnityPluginClass = new AndroidJavaClass("com.admob.plugin.AdmobUnityPlugin");
+                jadmob = admobUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
+                InnerAdmobListener innerlistener = new InnerAdmobListener();
+                innerlistener.admobInstance = this;
+                jadmob.Call("setContext", new object[] {new AdmobListenerProxy(innerlistener) });
+			}
+		}
+		public void removeAllBanner(){
+			jadmob.Call("removeAllBanner");
+		}
+	     public void initSDK(string appid)
+		{
+			jadmob.Call ("initSDK", new object[]{appid});
+		}
 		public void initAdmob(string bannerID,string fullID){
 			jadmob.Call ("initAdmob", new object[]{bannerID,fullID});
 		}
