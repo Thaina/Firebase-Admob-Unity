@@ -33,8 +33,12 @@ namespace admob
 
 		public void initSDK(string appid)
 		{
-		Debug.Log("calling init sdk");
-		}
+		    Debug.Log("calling init sdk");
+            Debug.Log("bannerEventHandler"+ bannerEventHandler==null);
+            Debug.Log("bannerEventHandler" + interstitialEventHandler == null);
+            Debug.Log("bannerEventHandler" + rewardedVideoEventHandler == null);
+            Debug.Log("bannerEventHandler" + nativeBannerEventHandler == null);
+        }
 		public void initAdmob(string bannerID, string fullID)
 		{
 		Debug.Log("calling initAdmob");

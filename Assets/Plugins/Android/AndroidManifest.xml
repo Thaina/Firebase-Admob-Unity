@@ -5,6 +5,7 @@ application's manifest, adding the necessary activity and permissions
 required for displaying ads.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
     package="com.admob.demo"
     >
 
