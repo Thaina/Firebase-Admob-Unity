@@ -36,7 +36,6 @@ public class admobdemo : MonoBehaviour {
 				 nativeBannerID = "ca-app-pub-3940256099942544/2247696110";
 			#endif
 			
-			
             ad = Admob.Instance();
             ad.bannerEventHandler += onBannerEvent;
             ad.interstitialEventHandler += onInterstitialEvent;
