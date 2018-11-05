@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using admob;
+using com.google.game;
 public class admobdemo : MonoBehaviour {
 	Admob ad;
 	string appID="";
@@ -22,34 +22,34 @@ public class admobdemo : MonoBehaviour {
    
     void initAdmob()
     {
-        	#if UNITY_IOS
+#if UNITY_IOS
         		 appID="ca-app-pub-3940256099942544~1458002511";
 				 bannerID="ca-app-pub-3940256099942544/2934735716";
 				 interstitialID="ca-app-pub-3940256099942544/4411468910";
 				 videoID="ca-app-pub-3940256099942544/1712485313";
 				 nativeBannerID = "ca-app-pub-3940256099942544/3986624511";
-        	#elif UNITY_ANDROID
+#elif UNITY_ANDROID
         		 appID="ca-app-pub-3940256099942544~3347511713";
 				 bannerID="ca-app-pub-3940256099942544/6300978111";
 				 interstitialID="ca-app-pub-3940256099942544/1033173712";
 				 videoID="ca-app-pub-3940256099942544/5224354917";
 				 nativeBannerID = "ca-app-pub-3940256099942544/2247696110";
-			#endif
-			
-            ad = Admob.Instance();
-            ad.bannerEventHandler += onBannerEvent;
-            ad.interstitialEventHandler += onInterstitialEvent;
-            ad.rewardedVideoEventHandler += onRewardedVideoEvent;
-            ad.nativeBannerEventHandler += onNativeBannerEvent;
-            ad.initSDK(appID);//optional
-            ad.initAdmob(bannerID,interstitialID );//all id are admob test id,change those to your
-                                                                                                             //ad.setTesting(true);//show test ad
-            //ad.setNonPersonalized(true);//if want load NonPersonalized only,set true
-           // ad.setIsDesignedForFamilies(true);//if is Is Designed For Families set true
-           // ad.setGender(AdmobGender.MALE);
-   		   //  string[] keywords = { "game","crash","male game"};
-          //  ad.setKeywords(keywords);//set keywords for ad
-            Debug.Log("admob inited -------------"+appID);
+#endif
+        AdProperties adProperties = new AdProperties();
+        adProperties.isTesting = true;
+
+        ad = Admob.Instance();
+        ad.bannerEventHandler += onBannerEvent;
+        ad.interstitialEventHandler += onInterstitialEvent;
+        ad.rewardedVideoEventHandler += onRewardedVideoEvent;
+        ad.nativeBannerEventHandler += onNativeBannerEvent;
+        ad.initSDK(appID,adProperties);//reqired,adProperties can been null
+
+        FirebaseAnalytic firebase=FirebaseAnalytic.Instance();//init and start analysis
+        firebase.logEvent("startevent", "{\"player\":\"yingke\"}");
+        firebase.setUserId("232324432");
+        firebase.setUserProperty("age", "20");
+        firebase.setAnalyticsCollectionEnabled(true);
         
     }
 	void OnGUI(){
@@ -62,7 +62,7 @@ public class admobdemo : MonoBehaviour {
             }
             else
             {
-                ad.loadInterstitial();
+                ad.loadInterstitial(interstitialID);
             }
         }
         if (GUI.Button(new Rect(240, 0, 100, 60), "showRewardVideo"))
@@ -79,24 +79,25 @@ public class admobdemo : MonoBehaviour {
         }
         if (GUI.Button(new Rect(0, 100, 100, 60), "showbanner"))
         {
-            Admob.Instance().showBannerRelative(AdSize.SmartBanner, AdPosition.BOTTOM_CENTER, 0);
+            Admob.Instance().showBannerRelative(bannerID,AdSize.SMART_BANNER, AdPosition.BOTTOM_CENTER);
         }
         if (GUI.Button(new Rect(120, 100, 100, 60), "showbannerABS"))
         {
-            Admob.Instance().showBannerAbsolute(AdSize.Banner, 20, 300);
+            Admob.Instance().showBannerAbsolute(bannerID,AdSize.BANNER, 20, 220,"mybanner");
         }
         if (GUI.Button(new Rect(240, 100, 100, 60), "removebanner"))
         {
             Admob.Instance().removeBanner();
+            Admob.Instance().removeBanner("mybanner");
         }
         
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {
-            Admob.Instance().showNativeBannerRelative(new AdSize(320,100), AdPosition.BOTTOM_CENTER, 0,nativeBannerID);
+            Admob.Instance().showNativeBannerRelative(nativeBannerID,new AdSize(320,280), AdPosition.BOTTOM_CENTER);
         }
         if (GUI.Button(new Rect(120, 200, 100, 60), "showNativeABS"))
         {
-            Admob.Instance().showNativeBannerAbsolute(new AdSize(-1,132), 20, 300, nativeBannerID);
+            Admob.Instance().showNativeBannerAbsolute(nativeBannerID,new AdSize(-1,132), 0, 300);
         }
         if (GUI.Button(new Rect(240, 200, 100, 60), "removeNative"))
         {

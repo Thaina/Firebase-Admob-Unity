@@ -1,139 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 using System.Runtime.InteropServices;
+using AOT;
 namespace admob
 {
-	public class Admob {
+    public class Admob
+    {
         public delegate void AdmobEventHandler(string eventName, string msg);
 
         public event AdmobEventHandler bannerEventHandler;
         public event AdmobEventHandler interstitialEventHandler;
         public event AdmobEventHandler rewardedVideoEventHandler;
         public event AdmobEventHandler nativeBannerEventHandler;
-        private static Admob _instance;	
-	
-		public static Admob Instance()
-	    {
-	        if(_instance == null)
-	        {
-	            _instance = new Admob();
-				_instance.preInitAdmob ();
-	        }
-	        return _instance;
-	    }
-        
-		#if UNITY_EDITOR
-	   	public void removeAllBanner(){
-		Debug.Log("calling removeAllBanner");
-	}
-		private void preInitAdmob()
-		{
+        private static Admob _instance;
 
-		}
-
-		public void initSDK(string appid)
-		{
-		    Debug.Log("calling init sdk");
-            Debug.Log("bannerEventHandler==null ? " + (bannerEventHandler==null));
-            Debug.Log("interstitialEventHandler==null ? " + (interstitialEventHandler == null));
-            Debug.Log("rewardedVideoEventHandler==null ? " + (rewardedVideoEventHandler == null));
-            Debug.Log("nativeBannerEventHandler==null ? " + (nativeBannerEventHandler == null));
-        }
-		public void initAdmob(string bannerID, string fullID)
-		{
-		Debug.Log("calling initAdmob");
-		}
-
-
-		public void showBannerAbsolute(AdSize size, int x, int y,string instanceName="defaultBanner")
-		{
-		Debug.Log("calling showBannerAbsolute");
-		}
-
-
-		public void showBannerRelative(AdSize size, int position, int marginY,string instanceName="defaultBanner")
-		{
-		Debug.Log("calling showBannerRelative");
-		}
-
-
-		public void removeBanner(string instanceName="defaultBanner")
-		{
-		Debug.Log("calling removeBanner");
-		}
-
-
-		public void loadInterstitial()
-		{
-		Debug.Log("calling loadInterstitial");
-		}
-
-
-		public bool isInterstitialReady()
-		{
-		Debug.Log("calling isInterstitialReady");
-		return false;
-		}
-
-
-		public void showInterstitial()
-		{
-		Debug.Log("calling showInterstitial");
-		}
-
-		public void loadRewardedVideo(string rewardedVideoID)
-		{
-		Debug.Log("calling loadRewardedVideo");
-		}
-		public bool isRewardedVideoReady()
-		{
-		Debug.Log("calling isRewardedVideoReady");
-		return false;
-		}
-		public void showRewardedVideo()
-		{
-		Debug.Log("calling showRewardedVideo");
-		}
-
-		public void setTesting(bool v)
-		{
-		Debug.Log("calling setTesting");
-		}
-        public void setIsDesignedForFamilies(bool v)
+        public static Admob Instance()
         {
-            Debug.Log("calling setIsDesignedForFamilies");
+            if (_instance == null)
+            {
+                _instance = new Admob();
+                _instance.preInitAdmob();
+            }
+            return _instance;
         }
-        public void setNonPersonalized(bool v)
-        {
-            Debug.Log("calling setNonPersonalized");
-        }
-        public void setGender(int v)
-        {
-            Debug.Log("calling setGender");
-        }
-        public void setKeywords(string[] v)
-        {
-            Debug.Log("calling setKeywords");
-        }
-
-        public void setForChildren(bool v)
-		{
-		Debug.Log("calling setForChildren");
-		}
-		public void showNativeBannerRelative(AdSize size, int position, int marginY,string nativeBannerID, string instanceName = "defaultNativeBanner")
-		{
-		Debug.Log("calling showNativeBannerRelative");
-		}
-		public void showNativeBannerAbsolute(AdSize size, int x, int y, string nativeBannerID,string instanceName = "defaultNativeBanner")
-		{
-		Debug.Log("calling showNativeBannerAbsolute");
-		}
-		public void removeNativeBanner(string instanceName = "defaultNativeBanner")
-		{
-		Debug.Log("calling removeNativeBanner");
-		}
-
-#elif UNITY_IOS
+#if UNITY_IOS
         internal delegate void AdmobAdCallBack(string adtype, string eventName, string msg);
 		public void removeAllBanner(){
 			Debug.Log("calling removeAllBanner");
@@ -143,30 +33,29 @@ namespace admob
 
         }
         [DllImport("__Internal")]
-        private static extern void _kminitSDK(string appid);
-        public void initSDK(string appid)
+        private static extern void _kminitSDK(string appid,string adproperties, AdmobAdCallBack callback);
+        public void initSDK(string appid,AdProperties value)
 		{
-			_kminitSDK(appid);
+			if(value==null){
+                value = new AdProperties();
+			}
+            string properties=value.toString();
+            _kminitSDK(appid,properties,onAdmobEventCallBack);
 		}
+     
+
         [DllImport("__Internal")]
-        private static extern void _kminitAdmob(string bannerid, string fullid, AdmobAdCallBack callback);
-        public void initAdmob(string bannerID, string fullID)
+        private static extern void _kmshowNativeBannerAbsolute(string nativeID, int width, int height, int x, int y,string instanceName);
+        public void showNativeBannerAbsolute(string nativeID,AdSize size, int x, int y, string instanceName = "defaultNativeBanner")
         {
-            _kminitAdmob(bannerID, fullID, onAdmobEventCallBack);
+            _kmshowNativeBannerAbsolute(nativeID,size.Width, size.Height, x, y, instanceName);
         }
 
         [DllImport("__Internal")]
-        private static extern void _kmshowNativeBannerAbsolute(int width, int height, int x, int y,string nativeID, string instanceName);
-        public void showNativeBannerAbsolute(AdSize size, int x, int y,string nativeID, string instanceName = "defaultNativeBanner")
+        private static extern void _kmshowNativeBannerRelative(string nativeID, int width, int height, int position, int marginY, string instanceName);
+        public void showNativeBannerRelative(string nativeID,AdSize size, int position, int marginY=0,  string instanceName = "defaultNativeBanner")
         {
-            _kmshowNativeBannerAbsolute(size.Width, size.Height, x, y,nativeID, instanceName);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void _kmshowNativeBannerRelative(int width, int height, int position, int marginY, string nativeID, string instanceName);
-        public void showNativeBannerRelative(AdSize size, int position, int marginY, string nativeID, string instanceName = "defaultNativeBanner")
-        {
-            _kmshowNativeBannerRelative(size.Width, size.Height, position, marginY,nativeID, instanceName);
+            _kmshowNativeBannerRelative(nativeID,size.Width, size.Height, position, marginY, instanceName);
         }
 
         [DllImport("__Internal")]
@@ -175,19 +64,25 @@ namespace admob
         {
             _kmremoveNativeBanner(instanceName);
         }
-
-        [DllImport("__Internal")]
-        private static extern void _kmshowBannerAbsolute(int width, int height, int x, int y,string instanceName);
-        public void showBannerAbsolute(AdSize size, int x, int y,string instanceName="defaultBanner")
+         [DllImport("__Internal")]
+        private static extern void _kmreloadNativeBannerAds(string instanceName);
+        public void reloadNativeBanner(string instanceName = "defaultNativeBanner")
         {
-            _kmshowBannerAbsolute(size.Width, size.Height, x, y,instanceName);
+            _kmreloadNativeBannerAds(instanceName);
         }
 
         [DllImport("__Internal")]
-        private static extern void _kmshowBannerRelative(int width, int height, int position, int marginY,string instanceName);
-        public void showBannerRelative(AdSize size, int position, int marginY,string instanceName="defaultBanner")
+        private static extern void _kmshowBannerAbsolute(string bannerid,int width, int height, int x, int y,string instanceName);
+        public void showBannerAbsolute(string bannerid,AdSize size, int x, int y,string instanceName="defaultBanner")
         {
-            _kmshowBannerRelative(size.Width, size.Height, position, marginY,instanceName);
+            _kmshowBannerAbsolute(bannerid,size.Width, size.Height, x, y,instanceName);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void _kmshowBannerRelative(string bannerid,int width, int height, int position, int marginY,string instanceName);
+        public void showBannerRelative(string bannerid,AdSize size, int position, int marginY=0,string instanceName="defaultBanner")
+        {
+            _kmshowBannerRelative(bannerid,size.Width, size.Height, position, marginY,instanceName);
         }
 
         [DllImport("__Internal")]
@@ -198,10 +93,10 @@ namespace admob
         }
 
         [DllImport("__Internal")]
-        private static extern void _kmloadInterstitial();
-        public void loadInterstitial()
+        private static extern void _kmloadInterstitial(string id);
+        public void loadInterstitial(string interstitialID)
         {
-            _kmloadInterstitial();
+            _kmloadInterstitial(interstitialID);
         }
 
         [DllImport("__Internal")]
@@ -238,46 +133,7 @@ namespace admob
         {
             _kmshowRewardedVideo();
         }
-
-        [DllImport("__Internal")]
-        private static extern void _kmsetTesting(bool v);
-        public void setTesting(bool v)
-        {
-            _kmsetTesting(v);
-        }
-        [DllImport("__Internal")]
-         private static extern void _kmsetIsDesignedForFamilies(bool v);
-        public void setIsDesignedForFamilies(bool v)
-        {
-            _kmsetIsDesignedForFamilies(v);
-        }
-        [DllImport("__Internal")]
-         private static extern void _kmsetNonPersonalized(bool v);
-         public void setNonPersonalized(bool v)
-        {
-            _kmsetNonPersonalized(v);
-        }
-         [DllImport("__Internal")]
-        private static extern void _kmsetGender(int v);
-        public void setGender(int v)
-        {
-            _kmsetGender(v);
-        }
-         [DllImport("__Internal")]
-        private static extern void _kmsetKeywords(string[] v,int count);
-        public void setKeywords(string[] v)
-        {
-           _kmsetKeywords(v,v.Length);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void _kmsetForChildren(bool v);
-        public void setForChildren(bool v)
-        {
-          //  Debug.Log("set for child in c#");
-            _kmsetForChildren(v);
-        }
-
+       
         [MonoPInvokeCallback(typeof(AdmobAdCallBack))]
         public static void onAdmobEventCallBack(string adtype, string eventName, string msg)
         {
@@ -303,49 +159,35 @@ namespace admob
                     Admob.Instance().nativeBannerEventHandler(eventName, msg);
             }
         }
-        
-#elif UNITY_ANDROID
-	private AndroidJavaObject jadmob;
-/*
-         private void preInitAdmob(){
-            if (jadmob == null) {
-                AndroidJavaClass admobUnityPluginClass = new AndroidJavaClass("com.admob.plugin.AdmobUnityPlugin");
-                jadmob = admobUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                InnerAdmobListener innerlistener = new InnerAdmobListener();
-                innerlistener.admobInstance = this;
-                AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                AndroidJavaObject activy = jc.GetStatic<AndroidJavaObject>("currentActivity");
 
-                jadmob.Call("setContext", new object[] { activy, new AdmobListenerProxy(innerlistener) });
-			}
-		}
-		*/
+#elif UNITY_ANDROID
+        private AndroidJavaObject jadmob;
 		 private void preInitAdmob(){
             if (jadmob == null) {
                 AndroidJavaClass admobUnityPluginClass = new AndroidJavaClass("com.admob.plugin.AdmobUnityPlugin");
                 jadmob = admobUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
                 InnerAdmobListener innerlistener = new InnerAdmobListener();
                 innerlistener.admobInstance = this;
-                jadmob.Call("setContext", new object[] {new AdmobListenerProxy(innerlistener) });
+                jadmob.Call("setListener", new object[] {new AdmobListenerProxy(innerlistener) });
 			}
 		}
 		public void removeAllBanner(){
 			jadmob.Call("removeAllBanner");
 		}
-	     public void initSDK(string appid)
+	     public void initSDK(string appid,AdProperties value)
 		{
-			jadmob.Call ("initSDK", new object[]{appid});
+            if(value==null){
+                value = new AdProperties();
+			}
+			jadmob.Call ("initSDK", new object[]{appid,value.toString()});
 		}
-		public void initAdmob(string bannerID,string fullID){
-			jadmob.Call ("initAdmob", new object[]{bannerID,fullID});
-		}
-        public void showBannerRelative(AdSize size, int position,int marginY,string instanceName="defaultBanner")
+        public void showBannerRelative(string admobBannerID,AdSize size, int position,int marginY=0,string instanceName="defaultBanner")
         {
-            jadmob.Call("showBannerRelative", new object[] { size.Width,size.Height,position,marginY,instanceName});
+            jadmob.Call("showBannerRelative", new object[] {admobBannerID, size.Width,size.Height,position,marginY,instanceName});
 		}
-        public void showBannerAbsolute(AdSize size, int x, int y, string instanceName = "defaultBanner")
+        public void showBannerAbsolute(string admobBannerID,AdSize size, int x, int y, string instanceName = "defaultBanner")
         {
-            jadmob.Call("showBannerAbsolute", new object[] { size.Width, size.Height,x,y ,instanceName});
+            jadmob.Call("showBannerAbsolute", new object[] {admobBannerID, size.Width, size.Height,x,y ,instanceName});
         }
         public void removeBanner(string instanceName = "defaultBanner")
         {
@@ -353,9 +195,9 @@ namespace admob
         }
 
 
-        public void loadInterstitial()
+        public void loadInterstitial(string interstitialID)
         {
-            jadmob.Call("loadInterstitial");
+            jadmob.Call("loadInterstitial",interstitialID);
         }
         public bool isInterstitialReady()
         {
@@ -381,41 +223,27 @@ namespace admob
         {
             jadmob.Call("showRewardedVideo");
         }
-        public void setGender(int v)
-        {
-            jadmob.Call("setGender",v);
+        /*
+        public void setAdProperties(AdProperties value) { 
+          jadmob.Call("setAdProperties",value.toString());
         }
-        public void setKeywords(string[] v)
+        */
+       
+        public void showNativeBannerRelative(string nativeBannerID, AdSize size, int position, int marginY=0,string instanceName = "defaultNativeBanner")
         {
-            jadmob.Call("setKeywords",new object[] {v});
+            jadmob.Call("showNativeBannerRelative", new object[] { nativeBannerID,size.Width, size.Height, position, marginY, instanceName });
         }
-        public void setTesting(bool value)
+        public void showNativeBannerAbsolute(string nativeBannerID,AdSize size, int x, int y, string instanceName = "defaultNativeBanner")
         {
-            jadmob.Call("setTesting",value);
-        }
-        public void setForChildren(bool value)
-        {
-            jadmob.Call("setForChildren",value);
-        }
-         public void setIsDesignedForFamilies(bool value)
-        {
-            jadmob.Call("setIsDesignedForFamilies",value);
-        }
-         public void setNonPersonalized(bool value)
-        {
-            jadmob.Call("setNonPersonalized",value);
-        }
-        public void showNativeBannerRelative(AdSize size, int position, int marginY,string nativeBannerID, string instanceName = "defaultNativeBanner")
-        {
-            jadmob.Call("showNativeBannerRelative", new object[] { size.Width, size.Height, position, marginY,nativeBannerID, instanceName });
-        }
-        public void showNativeBannerAbsolute(AdSize size, int x, int y, string nativeBannerID,string instanceName = "defaultNativeBanner")
-        {
-            jadmob.Call("showNativeBannerAbsolute", new object[] { size.Width, size.Height, x, y,nativeBannerID, instanceName });
+            jadmob.Call("showNativeBannerAbsolute", new object[] {nativeBannerID, size.Width, size.Height, x, y, instanceName });
         }
         public void removeNativeBanner(string instanceName = "defaultNativeBanner")
         {
             jadmob.Call("removeNativeBanner", instanceName);
+        }
+        public void reloadNativeBanner(string instanceName = "defaultNativeBanner")
+        {
+            jadmob.Call("reloadNativeBanner", instanceName);
         }
         class InnerAdmobListener : IAdmobListener
         {
@@ -446,51 +274,56 @@ namespace admob
         }
 
 #else
-public void removeAllBanner(){
-		Debug.Log("calling removeAllBanner");
-	}
+        public void removeAllBanner()
+        {
+            Debug.Log("calling removeAllBanner");
+        }
         private void preInitAdmob()
         {
-           
-        }
-        
-        public void initAdmob(string bannerID, string fullID)
-        {
-            Debug.Log("calling initAdmob");
+
         }
 
-        
-        public void showBannerAbsolute(AdSize size, int x, int y,string instanceName="defaultBanner")
+        public void initSDK(string appid,AdProperties adProperties)
+        {
+            Debug.Log("calling init sdk");
+            Debug.Log("bannerEventHandler==null ? " + (bannerEventHandler == null));
+            Debug.Log("interstitialEventHandler==null ? " + (interstitialEventHandler == null));
+            Debug.Log("rewardedVideoEventHandler==null ? " + (rewardedVideoEventHandler == null));
+            Debug.Log("nativeBannerEventHandler==null ? " + (nativeBannerEventHandler == null));
+        }
+
+
+        public void showBannerAbsolute(string bannerID,AdSize size, int x, int y, string instanceName = "defaultBanner")
         {
             Debug.Log("calling showBannerAbsolute");
         }
 
-        
-        public void showBannerRelative(AdSize size, int position, int marginY,string instanceName="defaultBanner")
+
+        public void showBannerRelative(string bannerID,AdSize size, int position, int marginY=0, string instanceName = "defaultBanner")
         {
             Debug.Log("calling showBannerRelative");
         }
 
-        
-        public void removeBanner(string instanceName="defaultBanner")
+
+        public void removeBanner(string instanceName = "defaultBanner")
         {
             Debug.Log("calling removeBanner");
         }
 
-        
-        public void loadInterstitial()
+
+        public void loadInterstitial(string interstitialID)
         {
             Debug.Log("calling loadInterstitial");
         }
 
-        
+
         public bool isInterstitialReady()
         {
             Debug.Log("calling isInterstitialReady");
-        return false;
+            return false;
         }
 
-        
+
         public void showInterstitial()
         {
             Debug.Log("calling showInterstitial");
@@ -509,36 +342,21 @@ public void removeAllBanner(){
         {
             Debug.Log("calling showRewardedVideo");
         }
-        
-        public void setTesting(bool v)
-        {
-            Debug.Log("calling setTesting");
-        }
 
-        
-        public void setForChildren(bool v)
+        //public void setAdProperties(AdProperties value) { }
+        public void showNativeBannerRelative(string nativeBannerID, AdSize size, int position, int marginY=0,string instanceName = "defaultNativeBanner")
         {
-            Debug.Log("calling setForChildren");
+            Debug.Log("calling showNativeBannerRelative");
         }
-         public void showNativeBannerRelative(AdSize size, int position, int marginY,string nativeBannerID, string instanceName = "defaultNativeBanner")
+        public void showNativeBannerAbsolute(string nativeBannerID, AdSize size, int x, int y,  string instanceName = "defaultNativeBanner")
         {
-           Debug.Log("calling showNativeBannerRelative");
-        }
-        public void showNativeBannerAbsolute(AdSize size, int x, int y, string nativeBannerID,string instanceName = "defaultNativeBanner")
-        {
-           Debug.Log("calling showNativeBannerAbsolute");
+            Debug.Log("calling showNativeBannerAbsolute");
         }
         public void removeNativeBanner(string instanceName = "defaultNativeBanner")
         {
-           Debug.Log("calling removeNativeBanner");
+            Debug.Log("calling removeNativeBanner");
         }
-                public void setGender(int v)
-        {
-            Debug.Log("calling setGender");
-        }
-        public void setKeywords(string[] v)
-        {
-            Debug.Log("calling setKeywords");
+        public void reloadNativeBanner(string instanceName="defaultNativeBanner"){
         }
 #endif
 
