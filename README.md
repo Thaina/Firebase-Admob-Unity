@@ -35,12 +35,27 @@ or Download all the Unity admob plugin project https://github.com/unity-plugins/
 3. Select the admob_unity_plugin.unitypackage file.
 4. Import all of the files for the plugins by selecting **Import**. Make sure
    to check for any conflicts with files.
+5. Edit AndroidManifest.xml change the appid to your
+6. Edit /res/values/strings.xml change google_app_id to your
+7. Unzip GoogleMobileAds.framework.zip to GoogleMobileAds.framework
+8. Replace GoogleService-Info.plist with your file ,and add this this to your xcode project
+9. Add other link flag -ObjC in xcode project
+
 
 ## Unity Plugin Wiki and Documentation
 * [API](https://github.com/unity-plugins/Firebase-Admob-Unity/wiki/Admob-Unity-Plugin-API)
 * [Tutorial](https://github.com/unity-plugins/Firebase-Admob-Unity/wiki)
 
 ## Quick Start
+### Google Firebase Analyze
+
+        FirebaseAnalytic firebase=FirebaseAnalytic.Instance();//init and start basic analysis
+        //you can set more info as follow ,but this is optional
+        firebase.logEvent("startevent", "{\"player\":\"yingke\"}");
+        firebase.setUserId("232324432");
+        firebase.setUserProperty("age", "20");
+       // firebase.setAnalyticsCollectionEnabled(true);
+
 #### 1.Init Firebase Admob Unity Plugin 
 Create A C# script ,drag the script to a object on scene , add the follow code in the script file
 ```
