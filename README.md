@@ -1,18 +1,19 @@
 Google Firebase Unity Admob Plugin
 ==============================
 
-Google Firebase Unity Admob Plugin provides a way to integrate firebase admob ads in Unity3D Game and u3d app.
-You can use it for Unity iOS and Android App with the same c# or js code.It support all native firebase admob features such as Native Express Ad
+Google Firebase Unity Admob Plugin provides a way to integrate firebase analyze and admob ads in Unity3D Game and u3d app.
+You can use it for Unity iOS and Android App with the same c# or js code.It support all native firebase admob features and firebase core
 
 ## Google Firebase Unity Admob Plugin Features
 Platforms supported in one plugin :
-- [x] Android, Based Admob SDK v11.0.4 (part of Google Firebase service)
-- [x] iOS, via SDK v7.26.0
+- [x] Android, Based Admob SDK v17.0.0 (part of Google Firebase service)
+- [x] iOS, via SDK v7.35.1
 - [x] Support all native events
 - [x] AdRequest targeting methods,such as children target,test mode
 - [x] Not need change Android package name
 - [x] Very simple API
 - [x] Based on FireBase SDK Version
+- [x] Firebase Analyze
 
 Ad Types:
 - [x] Banner(All Banner Type and Custom banner sizes)
@@ -44,13 +45,13 @@ or Download all the Unity admob plugin project https://github.com/unity-plugins/
 Create A C# script ,drag the script to a object on scene , add the follow code in the script file
 ```
     using admob;
-    Admob.Instance().initAdmob("admob banner id", "admob interstitial id");//admob id with format ca-app-pub-279xxxxxxxx/xxxxxxxx
+    Admob.Instance().initSDK("admob id", new AdProperties());//admob id with format ca-app-pub-279xxxxxxxx~xxxxxxxx
 
 ```
 #### 2.Add Admob Banner in Unity App 
 Here is the minimal code needed to show admob banner.
 ```
-    Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+    Admob.Instance().showBannerRelative("your banner id",AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
 ```
 
 The AdPosition class specifies where to place the banner. AdSize specifies witch size banner to show
@@ -65,7 +66,7 @@ By default, banners are visible. To temporarily hide a banner, call:
 
 Here is the minimal  code to create an interstitial.
 ```
-    Admob.Instance().loadInterstitial(); 
+    Admob.Instance().loadInterstitial("your interstitial id"); 
 ```
 Unlike banners, interstitials need to be explicitly shown. At an appropriate
 stopping point in your app, check that the interstitail is ready before
@@ -80,17 +81,17 @@ In addition to constants on _AdSize_, you can also create a custom size:
 ```
     //Create a 250x250 banner.
     AdSize adSize = new AdSize(250, 250);
-    Admob.Instance().showBannerAbsolute(adSize,0,30);
+    Admob.Instance().showBannerAbsolute("your banner id",adSize,0,30);
 ```
 #### 6.Admob settings
 If you want to test the ads ,non personalize ads,set tag for family or set tag for  children market,you can set with admob unity plugin easy
 ```
-    Admob.Instance().setNonPersonalized(true);//for only show non Personalized ads
-    Admob.Instance().setIsDesignedForFamilies(true);// this app designed for families
-    Admob.Instance().setTesting(true);//running test ads
-    Admob.Instance().setForChildren(true);// tag for children market
-     string[] keywords = { "game","crash","male game"};
-     Admob.Instance().setKeywords(keywords);
+        AdProperties adProperties = new AdProperties();
+        adProperties.isTesting = true;
+        adProperties.isForChildDirectedTreatment=true;
+        //adProperties.isUnderAgeOfConsent=true;
+        adProperties.isAppMuted=true;
+        adProperties.nonPersonalizedAdsOnly=true;
 ```
 #### 7.Ad Events
 Both _Banner_ and _Interstitial_ contain the same ad events that you can
@@ -128,7 +129,7 @@ showing it:
 Here is the minimal code needed to show admob banner.
 This is implemented with Admob Native Advanced as AdMob announced stop the express format ads 
 ```
-    Admob.Instance().showNativeBannerRelative(new AdSize(360,100), AdPosition.BOTTOM_CENTER, 0,"ca-app-pub-3940256099942544/2562852117","defaultNativeBanner");
+    Admob.Instance().showNativeBannerRelative("native ad id",new AdSize(360,100), AdPosition.BOTTOM_CENTER, 0,"defaultNativeBanner");
 
 ```
 
@@ -141,12 +142,12 @@ By default, banners are visible. To temporarily hide a banner, call:
 ```
 
 ## Important Tips
-1. remove **GoogleMobileAds.framework** and then  Add **GoogleMobileAds.framework**. to Xcode Project manually
-2. Add the following framework to Xcode project
-```
-    AdSupport.framework,EventKit.framework,EventKitUI.framework,CoreTelephony.framework,StoreKit.framework,MessageUI.framework
-```
-3. attach admobdemo.cs to the main camera or object object on stage all the time.    
+1. If you not config AndroidManifest.xml,APP will crash
+2. Attach admob to Object on scene,init admob before call admob fun
+3. Add GoogleService-Info.plist to your xcode project,otherwise,APP will crash
+4. Add Link Flag -ObjC to your xcode project,otherwise,APP will crash
+5. Unzip GoogleMobileAds.framework.zip to GoogleMobileAds.framework
+6. Edit res/values/string.xml and set the appid to your    
 
 ## Screenshots
 ![ScreenShot](https://github.com/unity-plugins/Firebase-Admob-Unity/blob/master/doc/android_banner_full.jpg?raw=true) 
