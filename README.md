@@ -18,7 +18,6 @@ Platforms supported in one plugin :
 Ad Types:
 - [x] Banner(All Banner Type and Custom banner sizes)
 - [x] Interstitial (text, picture, video)
-- [x] Rewarded Video 
 - [x] Native Advance Ad 
 - [x] Rewarded Video
 
